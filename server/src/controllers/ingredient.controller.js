@@ -4,7 +4,7 @@ class IngredientController {
     getAllIngredient = async (req, res, next) => {
         return new SuccessResponse({
             message: 'Successfully code generation',
-            metadata: await IngredientService.createDiscountCode({
+            metadata: await IngredientService.getAll({
                 ...req.body,
                 shopId: req.user.userId,
             }),

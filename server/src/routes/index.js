@@ -7,7 +7,7 @@ const router=express.Router()
 
 
 
-router.use('/v1/api', require('./access'))
+router.use('/api', require('./access'))
 // router.use('/v1/api/discount', require('./discount'))
 // router.use('/v1/api/product', require('./product'))
 

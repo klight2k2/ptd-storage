@@ -75,7 +75,7 @@ class ImportService {
     static filterImportIngredientByName = async({name}) => {
         const foundImport = await importModel.find({
             'ingredient.ingredient_name': name.q,
-        }).populate('ingredient', 'name').exec();
+        }).populate('ingredient', 'ingredient_name').exec();
         return foundImport;
     };
 }

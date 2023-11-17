@@ -21,7 +21,12 @@ class RecipeController {
         }).send(res);
     };
 
- 
+    filterRecipeByName = async (req, res, next) => {
+        return new SuccessResponse({
+            message: "Recipe detail information",
+            metadata: await RecipeService.filterRecipeByName({name:req.query})
+        }).send(res);
+    };
     
 }
 module.exports = new RecipeController();

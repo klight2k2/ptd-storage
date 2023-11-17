@@ -10,5 +10,6 @@ const recipeController = require('../../controllers/recipe.controller')
 router.get('/',authentication,asyncHandler(recipeController.getAll) )
 router.post('/',authentication,asyncHandler(recipeController.createRecipe) )
 router.delete('/:id',authentication,asyncHandler(recipeController.deleteRecipe) )
+router.get('/filter', asyncHandler(recipeController.filterRecipeByName))
 
 module.exports = router

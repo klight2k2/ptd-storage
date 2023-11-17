@@ -26,6 +26,11 @@ class RecipeService {
         const foundRecipe = await recipeModel.deleteOne({ _id: recipe_id });
         return foundRecipe;
     };
+
+    static filterRecipeByName = async({name}) => {
+        const foundRecipe = await recipeModel.find({ recipe_name: { $regex: `^${name.q}`, $options: 'i' } }).exec();
+        return foundRecipe;
+    };
 }
 
 module.exports = RecipeService;

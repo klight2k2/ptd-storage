@@ -59,6 +59,13 @@ class IngredientController {
             }),
         }).send(res);
     };
+
+    filterImportIngredientByName = async(req, res, next) => {
+        return new SuccessResponse({
+            message: "Import ingredient information detail",
+            metadata: await ImportService.filterImportIngredientByName({name: req.query}),
+        }).send(res);
+    };
     
 }
 module.exports = new IngredientController();

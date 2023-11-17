@@ -70,7 +70,14 @@ class ImportService {
             .find({
                 fridge: new mongoose.Types.ObjectId(fridge_id),
             }).exec();
-    }
+    };
+
+    static filterImportIngredientByName = async({name}) => {
+        const foundImport = await importModel.find({
+            'ingredient.ingredient_name': name.q,
+        }).populate('ingredient', 'name').exec();
+        return foundImport;
+    };
 }
 
 module.exports = ImportService;

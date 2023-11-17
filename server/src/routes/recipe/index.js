@@ -4,12 +4,11 @@ const router=express.Router()
 const {asyncHandler}= require('../../helpers/asyncHandler')
 const { authentication } = require('../../auth/authUtils')
 const importController = require('../../controllers/import.controller')
+const recipeController = require('../../controllers/recipe.controller')
 // sign up
 
-router.post('/',asyncHandler(importController.createImportIngredient) )
-router.get('/',asyncHandler(importController.getAllImportIngredient) )
-router.get('/expired',asyncHandler(importController.getExpiredImportIngredient) )
-router.get('/exprire-soon',asyncHandler(importController.getExpiredImportIngredient) )
-
+router.get('/',authentication,asyncHandler(recipeController.getAll) )
+router.post('/',authentication,asyncHandler(recipeController.createRecipe) )
+router.delete('/:id',authentication,asyncHandler(recipeController.deleteRecipe) )
 
 module.exports = router

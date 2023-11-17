@@ -18,9 +18,21 @@ var recipeSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        recipe_ingredients: [{
+        user:{
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Ingredient' // Reference tới model Ingredient
+            ref: 'User', 
+        },
+        time_cook: {
+            type: String,
+            required: true,
+        },
+        recipe_ingredients: [{
+           amount:Number,
+           ingredient:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Ingredient', 
+        },
+       
           }],
     },
     {

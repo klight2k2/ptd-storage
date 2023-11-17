@@ -11,14 +11,14 @@ var importSchema = new mongoose.Schema(
             required: true,
         },
         orginal_amount: {
-            type: String,
+            type: Number,
             required: true,
         },
         remain_amount: {
-            type: String,
+            type: Number,
             required: true,
         },
-        import_is_delete: {
+        is_delete: {
             type: Boolean,
             required: true,
         },

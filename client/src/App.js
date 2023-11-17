@@ -1,5 +1,5 @@
 import Layout from './pages/Layout/index.jsx';
-import Home from './pages/Home';
+import Home from './pages/Home/Home.jsx';
 
 import './style.scss';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -8,15 +8,18 @@ import { AuthContext } from './context/AuthContext';
 import Recipe from './pages/Recipe/Recipe.jsx';
 import Fridge from './pages/Fridge/Fridge.jsx';
 import Statistic from './pages/Statistic/Statistic.jsx';
+import Register from './pages/Register/Register.jsx';
+import Login from './pages/Login/Login.jsx';
 
 
 function App() {
     const { currentUser } = useContext(AuthContext);
 
     const ProtectedRoute = ({ children }) => {
-        // if (!currentUser) {
-        //     return <Navigate to='/login' />;
-        // }
+        console.log("currentUser", currentUser)
+        if (!currentUser) {
+            return <Navigate to='/login' />;
+        }
 
         return children;
     };
@@ -41,8 +44,8 @@ function App() {
                       
                     </Route>
                 </Route>
-                {/* <Route path='login' element={<Login />} />
-                <Route path='register' element={<Register />} /> */}
+                <Route path='login' element={<Login />} />
+                 <Route path='register' element={<Register />} />
             </Routes>
         </BrowserRouter>
     );

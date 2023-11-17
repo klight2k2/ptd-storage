@@ -3,7 +3,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, UploadOutlined, UserOutlined, Vid
 import { Layout, Menu, Button, theme } from 'antd';
 import { Outlet } from 'react-router-dom';
 import Sidebar from "../../components/Sidebar/Sidebar"
-
+import Navbar from "../../components/Navbar/Navbar"
 import "./layout.scss"
 const { Header, Sider, Content } = Layout;
 export default function Index() {
@@ -24,7 +24,7 @@ export default function Index() {
                         background: colorBgContainer,
                     }}
                 >
-                    <Button
+                    {/* <Button
                         type='text'
                         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                         onClick={() => setCollapsed(!collapsed)}
@@ -33,7 +33,8 @@ export default function Index() {
                             width: 64,
                             height: 64,
                         }}
-                    />
+                    /> */}
+                    <Navbar></Navbar>
                 </Header>
                 <Content
                     style={{

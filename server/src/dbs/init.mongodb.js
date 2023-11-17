@@ -5,7 +5,7 @@ const {countConnect}=require('../helpers/check.connect')
 
 
 const connectString=`mongodb://${host}:${port}/${name}`
-
+// const connectString=`mongodb+srv://quangpmwork:2YymY4ZJkDzjkk4@cluster0.4zxqrog.mongodb.net/?retryWrites=true&w=majority`
 
 class Database{
     constructor(){

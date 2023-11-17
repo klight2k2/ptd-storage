@@ -1,13 +1,24 @@
-import { Timestamp } from 'firebase/firestore';
 import moment from 'moment';
 
-export const convertTimeStamp = (time) => {
-    const date = new Timestamp(time?.seconds, time?.nanoseconds).toDate();
-    return date;
-};
+export const convertToDate= (date)=>{
+    const datetime = new Date(date);
 
-export const convertToTimeAgo = (time) => {
-    const datetime = new Date(time);
+    return moment(datetime).format('YYYY-MM-DD');
+}
 
-    return moment(datetime).fromNow();
-};
+
+export const formatDate=(date)=> {
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+  
+    if (month < 10) {
+      month = "0" + month;
+    }
+    if (day < 10) {
+      day = "0" + day;
+    }
+  
+    var formattedDate = year + "-" + month + "-" + day;
+    return formattedDate;
+  }

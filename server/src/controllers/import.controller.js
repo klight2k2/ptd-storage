@@ -41,6 +41,24 @@ class IngredientController {
             }),
         }).send(res);
     };
+    getIngredientByFridge = async(req, res, next) => {
+        return new SuccessResponse({
+            message: "Ingredient detail",
+            metadata: await ImportService.getIngredientByFridge({
+                fridge_id: req.params.id,
+            }),
+        }).send(res);
+    };
+
+    updateImportIngredient = async (req, res, next) => {
+        return new SuccessResponse({
+            message: "Update imported ingredient successfully",
+            metadata: await ImportService.updateImportIngredient({
+                import_id: req.params.id,
+                importIngredient: req.body,
+            }),
+        }).send(res);
+    };
     
 }
 module.exports = new IngredientController();

@@ -1,4 +1,5 @@
 const importModel = require('../models/import.model');
+const mongoose = require('mongoose');
 const { BadRequestError } = require('../core/error.response');
 class ImportService {
     static getAll = async ({ fridge_id, is_delete = false }) => {
@@ -12,9 +13,19 @@ class ImportService {
     };
 
     static updateImportIngredient = async ({ import_id, importIngredient }) => {
-        const foundImportIngredient = await ingredientModel.findByIdAndUpdate(import_id, importIngredient);
-
-        return foundImportIngredient;
+        const amountTaken = importIngredient.amount;
+        const foundImport = await importModel.findById(import_id);
+        const amountRemain = foundImport.remain_amount - amountTaken;
+        if(amountRemain === 0){
+            return await importModel.findByIdAndUpdate(import_id, {
+                remain_amount: 0,
+                is_delete: true,
+            }, {new: true});
+        } else {
+            return await importModel.findByIdAndUpdate(import_id, {
+                remain_amount: amountRemain,
+            }, {new: true});
+        }
     };
 
     static deleteImportIngredient = async ({ import_id }) => {
@@ -53,6 +64,13 @@ class ImportService {
             .populate('ingredient')
             .lean();
     };
+
+    static getIngredientByFridge = async({fridge_id}) => {
+        return await importModel
+            .find({
+                fridge: new mongoose.Types.ObjectId(fridge_id),
+            }).exec();
+    }
 }
 
 module.exports = ImportService;

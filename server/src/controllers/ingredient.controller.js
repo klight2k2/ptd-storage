@@ -34,5 +34,14 @@ class IngredientController {
             }),
         }).send(res);
     };
+
+    getIngredientById = async(req, res, next) => {
+        return new SuccessResponse({
+            message: "Ingredient detail",
+            metadata: await IngredientService.getIngredientById({
+                ingredient_id: req.params.id,
+            }),
+        }).send(res);
+    };
 }
 module.exports = new IngredientController();

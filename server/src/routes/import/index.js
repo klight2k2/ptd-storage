@@ -8,8 +8,10 @@ const importController = require('../../controllers/import.controller')
 
 router.post('/',asyncHandler(importController.createImportIngredient) )
 router.get('/',asyncHandler(importController.getAllImportIngredient) )
+router.get('/:id',asyncHandler(importController.getIngredientByFridge))
 router.get('/expired',asyncHandler(importController.getExpiredImportIngredient) )
 router.get('/exprire-soon',asyncHandler(importController.getExpiredImportIngredient) )
+router.put('/:id',asyncHandler(importController.updateImportIngredient))
 
 
 module.exports = router

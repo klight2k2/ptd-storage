@@ -25,6 +25,11 @@ class IngredientService {
         const foundIngredient = await ingredientModel.deleteOne({_id: ingredient_id});
         return foundIngredient;
     };
+
+    static getIngredientById = async({ingredient_id}) => {
+        const foundIngredient = await ingredientModel.findById(ingredient_id);
+        return foundIngredient;
+    }
 }
 
 module.exports = IngredientService;

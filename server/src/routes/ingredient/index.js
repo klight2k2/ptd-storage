@@ -8,6 +8,7 @@ const ingredientController = require('../../controllers/ingredient.controller')
 
 router.post('/',asyncHandler(ingredientController.createIngredient))
 router.get('/',asyncHandler(ingredientController.getAllIngredient))
+router.get('/:id', asyncHandler(ingredientController.getIngredientById))
 router.put('/:id',asyncHandler(ingredientController.updateIngredient))
 router.delete('/:id',asyncHandler(ingredientController.deleteIngredient))
 

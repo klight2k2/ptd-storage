@@ -14,10 +14,10 @@ class AccessService {
         const match = bcrypt.compare(password, foundUser.password);
         if (!match) throw new AuthFailureError('Authentication error');
 
-        const accessToken = jwt.sign( getInfoData({ fields: ['_id', 'display_name', 'email', 'photo_url','fridge'], object: foundUser }), process.env.KEY);
+        const access_token = jwt.sign( getInfoData({ fields: ['_id', 'display_name', 'email', 'photo_url','fridge'], object: foundUser }), process.env.KEY);
         return {
             user: getInfoData({ fields: ['_id', 'display_name', 'email', 'photo_url','fridge'], object: foundUser }),
-            accessToken,
+            access_token,
         };
     };
 
@@ -31,14 +31,14 @@ class AccessService {
             const passwordHash = await bcrypt.hash(password, 10);
             const newFridge= await fridgeModel.create({fridge_name:`fridge ${email}`})
             const newUser = await userModel.create({ display_name, email, password: passwordHash,fridge:newFridge._id });
-            const accessToken = jwt.sign( getInfoData({ fields: ['_id', 'display_name', 'email', 'photo_url','fridge'], object: newUser }), process.env.KEY);
+            const access_token = jwt.sign( getInfoData({ fields: ['_id', 'display_name', 'email', 'photo_url','fridge'], object: newUser }), process.env.KEY);
             console.log("$",newUser)
             if (newUser) {
                 return {
                     code: 201,
                     metadata: {
                         user: getInfoData({ fields: ['_id', 'display_name', 'email', 'photo_url','fridge'], object: newUser }),
-                        accessToken,
+                        access_token,
                     },
                 };
             }

@@ -1,5 +1,4 @@
-// import { db } from '../../firebase';
-// import { addDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { message } from "antd";
 
 class Http {
   static post = async (url, data) => {
@@ -10,7 +9,10 @@ class Http {
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer " + localStorage.getItem("@token")
       }),
-    }).then(response => response.json()).then(response => response.data);
+    }).then(response => response.json()).then(response => {
+      message.open("success", response.message)
+      return response.metadata
+    });
   };
 
   static get=async (url)=>{
@@ -20,7 +22,7 @@ class Http {
           'Content-Type': 'application/json; charset=UTF-8',
           "Authorization": "Bearer " + localStorage.getItem("@token")
         }),
-      }).then(response => response.json()).then(response => response.data);
+      }).then(response => response.json()).then(response => response.metadata);
       ;
   }
 

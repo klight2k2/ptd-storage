@@ -10,7 +10,7 @@ class Http {
         "Authorization": "Bearer " + localStorage.getItem("@token")
       }),
     }).then(response => response.json()).then(response => {
-      message.open("success", response.message)
+      message.open({type:"success", content:response.message})
       return response.metadata
     });
   };

@@ -3,7 +3,7 @@ const { asyncHandler } = require("../helpers/asyncHandler");
 const { NotFoundError, AuthFailureError } = require("../core/error.response");
 const HEADER = {
     API_KEY: "x-api-key",
-    CLIENT_ID: "x-client-id",
+    FRIDGE: "fridge",
     AUTHORIZATION: "authorization",
 };
 
@@ -21,6 +21,7 @@ const authentication = asyncHandler(async (req, res, next) => {
     // if (!userId) throw new AuthFailureError("Invalid request");
 
     const accessToken = req.headers[HEADER.AUTHORIZATION];
+    const fridge = req.headers[HEADER.FRIDGE];
 
     console.log(accessToken);
     try {
@@ -29,6 +30,7 @@ const authentication = asyncHandler(async (req, res, next) => {
         if(!decodeUser)
             throw new AuthFailureError("Invalid user");
         req.user = decodeUser;
+        req.fridge=fridge;
         console.log(req.user);
         return next();
     } catch (error) {

@@ -1,40 +1,44 @@
-import { message } from "antd";
+import { message } from 'antd';
 
 class Http {
-  static post = async (url, data) => {
-    return await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Authorization": "Bearer " + localStorage.getItem("@token")
-      }),
-    }).then(response => response.json()).then(response => {
-      message.open({type:"success", content:response.message})
-      return response.metadata
-    });
-  };
+    static post = async (url, data) => {
+        return await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: localStorage.getItem('access_token'),
+            }),
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                message.open({ type: 'success', content: response.message });
+                return response.metadata;
+            });
+    };
 
-  static get=async (url)=>{
-    return await fetch(url, {
-        method: 'GET',
-        headers: new Headers({
-          'Content-Type': 'application/json; charset=UTF-8',
-          "Authorization": "Bearer " + localStorage.getItem("@token")
-        }),
-      }).then(response => response.json()).then(response => response.metadata);
-      ;
-  }
+    static get = async (url) => {
+        return await fetch(url, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: localStorage.getItem('access_token'),
+                fridge: localStorage.getItem('fridge'),
+            }),
+        })
+            .then((response) => response.json())
+            .then((response) => response.metadata);
+    };
 
-  static delete=async (url)=>{
-    return await fetch(url, {
-        method: 'DELETE',
-        headers: new Headers({
-          'Content-Type': 'application/json; charset=UTF-8',
-          "Authorization": "Bearer " + localStorage.getItem("@token")
-        }),
-      });
-  }
+    static delete = async (url) => {
+        return await fetch(url, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                Authorization: localStorage.getItem('access_token'),
+            }),
+        });
+    };
 }
 
-export default Http
+export default Http;

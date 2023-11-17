@@ -1,5 +1,5 @@
 import Layout from './pages/Layout/index.jsx';
-import Home from './pages/Home';
+import Home from './pages/Home/Home.jsx';
 
 import './style.scss';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';

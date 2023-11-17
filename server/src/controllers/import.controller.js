@@ -3,8 +3,8 @@ const ImportService = require('../services/import.service');
 class IngredientController {
     getAllImportIngredient = async (req, res, next) => {
         return new SuccessResponse({
-            message: 'Successfully code generation',
-            metadata: await ImportService.getAll({ fridge_id: req.query.fridge }),
+            message: 'get all import ingredient successfully',
+            metadata: await ImportService.getAll({ fridge_id: req.fridge }),
         }).send(res);
     };
 
@@ -19,14 +19,14 @@ class IngredientController {
     getExpiredImportIngredient = async (req, res, next) => {
         return new SuccessResponse({
             message: 'Successfully create ingredient',
-            metadata: await ImportService.getExpiredImportIngredient({ fridge_id: req.query.fridge, date_exp: req.query?.dateExp }),
+            metadata: await ImportService.getExpiredImportIngredient({ fridge_id: req.fridge, date_exp: req.query?.dateExp }),
         }).send(res);
     };
     getExpiredSoonImportIngredient = async (req, res, next) => {
         return new SuccessResponse({
             message: 'Successfully create ingredient',
             metadata: await ImportService.getExpiredImportIngredient({
-                fridge_id: req.query.fridge,
+                fridge_id: req.fridge,
                 from_date: req.query?.fromDate,
                 to_date: req.query?.toDate,
             }),
@@ -41,6 +41,5 @@ class IngredientController {
             }),
         }).send(res);
     };
-    
 }
 module.exports = new IngredientController();

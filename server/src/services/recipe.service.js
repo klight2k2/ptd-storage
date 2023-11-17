@@ -4,6 +4,9 @@ class RecipeService {
     static getAll = async ({user_id}) => {
         return recipeModel.find({user:user_id}).populate('recipe_ingredients.ingredient').lean();
     };
+    static getLastestRecipe = async ({user_id}) => {
+        return recipeModel.find({user:user_id}).sort({createdAt:-1}).limit(5).populate('recipe_ingredients.ingredient').lean();
+    };
 
     static createRecipe = async ({ user_id, recipe }) => {
         const { recipe_name, recipe_description, image_url, recipe_ingredients,time_cook } = recipe;

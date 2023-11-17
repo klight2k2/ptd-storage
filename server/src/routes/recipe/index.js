@@ -8,6 +8,7 @@ const recipeController = require('../../controllers/recipe.controller')
 // sign up
 
 router.get('/',authentication,asyncHandler(recipeController.getAll) )
+router.get('/lastest',authentication,asyncHandler(recipeController.getLastestRecipe) )
 router.post('/',authentication,asyncHandler(recipeController.createRecipe) )
 router.delete('/:id',authentication,asyncHandler(recipeController.deleteRecipe) )
 

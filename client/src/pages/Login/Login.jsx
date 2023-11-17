@@ -1,17 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button, Form, Input, Image } from 'antd';
 
 import './login.scss';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import AuthSerivce from '../../services/AuthService';
 export default function Login() {
     const { currentUser, setCurrentUser } = useContext(AuthContext);
 
     const navigate = useNavigate();
-    if (currentUser) {
-        return navigate('/home');
-    }
+    useEffect(()=>{
+        if (currentUser) {
+            console.log(currentUser)
+            return navigate('/home');
+        }
+
+    },[currentUser])
     const onFinish = async (userForm) => {
         console.log('Success:', userForm);
         const userInfo = await AuthSerivce.login(userForm);
@@ -19,6 +23,7 @@ export default function Login() {
         if (userInfo) {
             localStorage.setItem('access_token', userInfo.access_token);
             localStorage.setItem('user', JSON.stringify(userInfo.user));
+            localStorage.setItem('fridge',userInfo.user.fridge);
             setCurrentUser(userInfo.user);
             return navigate('/home');
         }

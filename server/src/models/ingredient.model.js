@@ -9,6 +9,9 @@ var ingredientSchema = new mongoose.Schema(
         ingredient_name: {
             type: String,
             required: true,
+            unique:true,
+            index:true,
+
         },
         ingredient_unit: {
             type: String,

@@ -16,6 +16,11 @@ var userSchema = new mongoose.Schema(
         },
         photo_url: String,
         display_name: String,
+        fridge: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Fridge', 
+        },
+     
     },
     {
         timestamps: true,

@@ -10,10 +10,10 @@ var fridgeSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Ingredient' // Reference tới model Ingredient
-        },
+        // user: {
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: 'Ingredient' // Reference tới model Ingredient
+        // },
     
     },
     {

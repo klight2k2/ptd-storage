@@ -18,14 +18,18 @@ var importSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        import_status: {
-            type: String,
+        import_is_delete: {
+            type: Boolean,
             required: true,
         },
         fridge: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Fridge', 
         },
+        ingredient:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Ingredient', 
+        }
     },
     {
         timestamps: true,

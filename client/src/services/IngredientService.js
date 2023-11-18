@@ -14,6 +14,14 @@ class IngredientService {
             return null;
         }
     };
+    getAllImportIngredient = async () => {
+        try {
+            return await Http.get(BaseUrl);
+        } catch (e) {
+            console.log('login error', e);
+            return null;
+        }
+    };
 }
 
 export default new IngredientService();

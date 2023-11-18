@@ -10,6 +10,7 @@ import Fridge from './pages/Fridge/Fridge.jsx';
 import Statistic from './pages/Statistic/Statistic.jsx';
 import Register from './pages/Register/Register.jsx';
 import Login from './pages/Login/Login.jsx';
+import Ingredients from './pages/Ingredients/Ingredients.jsx';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
                         <Route index path='recipe' element={<Recipe />} />
                         <Route index path='fridge' element={<Fridge />} />
                         <Route index path='statistic' element={<Statistic />} />
+                        <Route index path='fridge/ingredients' element={<Ingredients />} />
                       
                     </Route>
                 </Route>

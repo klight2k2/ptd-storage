@@ -34,5 +34,6 @@ class IngredientController {
             }),
         }).send(res);
     };
+   
 }
 module.exports = new IngredientController();

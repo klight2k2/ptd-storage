@@ -31,6 +31,7 @@ class ImportService {
         return importModel
             .find({
                 fridge: fridge_id,
+                is_delete:false,
                 import_exp: {
                     $lte: currentDate,
                 },
@@ -82,6 +83,40 @@ class ImportService {
         });
         return taken;
     };
+
+
+    static statisticIngredient = async ({ fridge }) => {
+        let statistic={}
+        const importList=await importModel.find({
+            is_delete:false,
+            fridge:fridge,
+            remain_amount:{
+                $gte:0
+            }
+        }).populate("ingredient").lean()
+        importList.map(item=>{
+            statistic[item.ingredient.ingredient_name]={
+                name:item.ingredient.ingredient_name,
+                expired:0,
+                useable:0,
+                unit:item.ingredient.ingredient_unit
+            }
+        })
+        importList.map(item=>{
+            const currentDate= new Date()
+            const expDate= new Date(item.import_exp)
+          
+            if(currentDate> expDate){
+                statistic[item.ingredient.ingredient_name].expired+=item.remain_amount
+            }else{
+                statistic[item.ingredient.ingredient_name].useable+=item.remain_amount
+
+            }
+        })
+        statistic= Object.values(statistic)
+        return statistic
+
+    }
 }
 
 module.exports = ImportService;

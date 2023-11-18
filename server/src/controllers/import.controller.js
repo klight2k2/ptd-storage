@@ -50,6 +50,15 @@ class IngredientController {
             }),
         }).send(res);
     };
+
+    statisticIngredient = async (req, res, next) => {
+        return new SuccessResponse({
+            message: 'Successfully statisticIngredient ',
+            metadata: await ImportService.statisticIngredient({
+                fridge: req.fridge
+            }),
+        }).send(res);
+    };
     deleteIngredient = async (req, res, next) => {
         return new SuccessResponse({
             message: 'Successfully delete ingredient',

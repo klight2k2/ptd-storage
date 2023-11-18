@@ -10,7 +10,7 @@ var importSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
-        notes: {
+        note: {
             type: String,
         },
         orginal_amount: {

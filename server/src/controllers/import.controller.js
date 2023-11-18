@@ -33,6 +33,23 @@ class IngredientController {
         }).send(res);
     };
 
+    throwImportIngredient = async (req, res, next) => {
+        return new SuccessResponse({
+            message: 'Successfully delete ingredient',
+            metadata: await ImportService.throwImportIngredient({
+                import_id: req.params.id,
+            }),
+        }).send(res);
+    };
+
+    takeImportIngredient = async (req, res, next) => {
+        return new SuccessResponse({
+            message: 'Successfully delete ingredient',
+            metadata: await ImportService.takenImportIngredientById({
+                ...req.body,
+            }),
+        }).send(res);
+    };
     deleteIngredient = async (req, res, next) => {
         return new SuccessResponse({
             message: 'Successfully delete ingredient',

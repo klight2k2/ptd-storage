@@ -9,6 +9,7 @@ var recipeSchema = new mongoose.Schema(
         recipe_name: {
             type: String,
             required: true,
+            index: true
         },
         recipe_description: {
             type: String,

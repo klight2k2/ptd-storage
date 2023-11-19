@@ -125,7 +125,7 @@ export default function Recipe() {
                                                 <div className='grid-2'>
                                                     {item.recipe_ingredients?.map((ingre) => {
                                                         const ingredient = ingre.ingredient;
-                                                        return <li>{`${ingredient.ingredient_name} ${ingre.amount} ${ingredient.ingredient_unit}`}</li>;
+                                                        return <li>{`${ingredient?.ingredient_name} ${ingre.amount} ${ingredient?.ingredient_unit}`}</li>;
                                                     })}
                                                 </div>
                                             </p>

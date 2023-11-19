@@ -6,11 +6,11 @@ class ImportService {
         return importModel.find({ fridge: fridge_id, is_delete }).populate('ingredient').lean();
     };
 
-    static createImportIngredient = async ({ import_exp, orginal_amount, remain_amount, is_delete = false, fridge, ingredient ,note}) => {
-        const importIngredient = await importModel.create({ import_exp, orginal_amount, remain_amount, is_delete, fridge, ingredient,note });
+    static createImportIngredient = async ({ import_exp, orginal_amount, is_delete = false, fridge, ingredient ,note}) => {
+        const importIngredient = await importModel.create({ import_exp, orginal_amount, remain_amount:original_amount, is_delete, fridge, ingredient,note });
 
         if (!importIngredient) throw new BadRequestError('Error when import');
-        await logModel.create({ log_type: 'IMPORT', log_import: importIngredient._id, fridge: fridge });
+        await logModel.create({ log_type: 'IMPORT', log_import: importIngredient._id, fridge: fridge ,log_amount:orginal_amount});
         return importIngredient;
     };
 

@@ -6,6 +6,11 @@ export const convertToDate= (date)=>{
 
     return moment(datetime).format('YYYY-MM-DD');
 }
+export const convertToDateISO= (date)=>{
+    const datetime = new Date(date);
+
+    return moment(datetime).toLocaleString();
+}
 
 
 export const formatDate=(date)=> {

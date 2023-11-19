@@ -22,3 +22,14 @@ export const formatDate=(date)=> {
     var formattedDate = year + "-" + month + "-" + day;
     return formattedDate;
   }
+
+  export function formatDateNew(date, errorText, format){
+    if (moment(date).isValid()) {
+      if (format !== "" && format !== undefined) {
+        return moment(date).format(format);
+      }
+      return moment(date).format("DD/MM/YYYY");
+    }
+    return errorText ? errorText : `Ngày không hợp lệ`;
+  }
+  

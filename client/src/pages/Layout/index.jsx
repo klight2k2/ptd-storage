@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Outlet } from 'react-router-dom';
-import Sidebar from "../../components/Sidebar/Sidebar"
-import Navbar from "../../components/Navbar/Navbar"
-import "./layout.scss"
+import Sidebar from '../../components/Sidebar/Sidebar';
+import Navbar from '../../components/Navbar/Navbar';
+import './layout.scss';
 const { Header, Sider, Content } = Layout;
 export default function Index() {
     const [collapsed, setCollapsed] = useState(false);
@@ -13,15 +13,30 @@ export default function Index() {
     } = theme.useToken();
     return (
         <Layout>
-            <Sider className='sidebar' trigger={null} collapsible collapsed={collapsed}>
-              <Sidebar>
-              </Sidebar>
+            <Sider
+                style={{
+                    overflow: 'auto',
+                    height: '100vh',
+                    position: 'fixed',
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                }}
+                className='sidebar'
+                trigger={null}
+                collapsible
+                collapsed={collapsed}
+            >
+                <Sidebar></Sidebar>
             </Sider>
-            <Layout>
+            <Layout style={{ marginLeft: 200 }}>
                 <Header
                     style={{
                         padding: 0,
                         background: colorBgContainer,
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 1,
                     }}
                 >
                     {/* <Button
@@ -40,7 +55,6 @@ export default function Index() {
                     style={{
                         margin: '24px 16px',
                         padding: 24,
-                        minHeight: 280,
                         background: colorBgContainer,
                     }}
                 >

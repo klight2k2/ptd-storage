@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import IngredientService from '../../services/IngredientService';
 import RecipeService from '../../services/RecipeService';
-import { convertToDate, formatDate } from '../../utils/timeUtil';
+import { convertToDate, formatDate, formatImageLink } from '../../utils/timeUtil';
 import { Space, Image } from 'antd';
 
 import './home.scss';
@@ -65,11 +65,12 @@ export default function Home() {
                         <div className='ingredient'>
                             <div className='ingredient-info'>
                                 <p>{item.recipe_name}</p>
-                                <p>{item.recipe_description} </p>
+                                <p>Mô tả: {item.recipe_description} </p>
+                                <p>Thời gian nấu: {item.time_cook} </p>
                             </div>
                             <img
                                 className='ingredient-img'
-                                src={item.image_url}
+                                src={formatImageLink(item.image_url)}
                             ></img>
                         </div>
                     );

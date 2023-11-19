@@ -8,9 +8,10 @@ class RecipeController {
         }).send(res);
     };
     createRecipe = async (req, res, next) => {
+        console.log("hello",req.body)
         return new SuccessResponse({
             message: 'Successfully create recipe',
-            metadata: await RecipeService.createRecipe({ user_id: req.user._id, recipe: { ...req.body } }),
+            metadata: await RecipeService.createRecipe({ user_id: req.user._id, recipe: { ...req.body,image_url:req?.file?.filename } }),
         }).send(res);
     };
     deleteRecipe = async (req, res, next) => {

@@ -5,11 +5,12 @@ const {asyncHandler}= require('../../helpers/asyncHandler')
 const { authentication } = require('../../auth/authUtils')
 const importController = require('../../controllers/import.controller')
 const recipeController = require('../../controllers/recipe.controller')
+const storage = require('../../utils/storage')
 // sign up
 
 router.get('/',authentication,asyncHandler(recipeController.getAll) )
 router.get('/lastest',authentication,asyncHandler(recipeController.getLastestRecipe) )
-router.post('/',authentication,asyncHandler(recipeController.createRecipe) )
+router.post('/',authentication,(storage),asyncHandler(recipeController.createRecipe) )
 router.delete('/:id',authentication,asyncHandler(recipeController.deleteRecipe) )
 
 module.exports = router

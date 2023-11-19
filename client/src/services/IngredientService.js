@@ -22,6 +22,35 @@ class IngredientService {
             return null;
         }
     };
+
+    statisticImportIngredient= async()=>{
+        try {
+            let url = `${BaseUrl}/statistic`;
+            return await Http.get(url);
+        } catch (e) {
+            console.log('statisticImportIngredient error', e);
+            return null;
+        }
+    }
+    getAllIngredient= async()=>{
+        try {
+            let url = `http://localhost:8000/api/ingredient/`;
+            return await Http.get(url);
+        } catch (e) {
+            console.log('statisticImportIngredient error', e);
+            return null;
+        }
+    }
+
+    getLogs=async()=>{
+        try {
+            let url = `http://localhost:8000/api/ingredient/`;
+            return await Http.get(url);
+        } catch (e) {
+            console.log('statisticImportIngredient error', e);
+            return null;
+        }
+    }
 }
 
 export default new IngredientService();

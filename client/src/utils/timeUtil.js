@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { BASE_URL } from '../services/api';
 
 export const convertToDate= (date)=>{
     const datetime = new Date(date);
@@ -21,4 +22,8 @@ export const formatDate=(date)=> {
   
     var formattedDate = year + "-" + month + "-" + day;
     return formattedDate;
+  }
+
+  export const formatImageLink=(imageLink)=>{
+    return `${BASE_URL}/images/${imageLink}`
   }

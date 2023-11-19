@@ -40,16 +40,13 @@ export default function Sidebar() {
                             },
                             {
                                 key: '4-2',
-                                label: <NavLink to='fridge/recipe'>Category</NavLink>,
+                                label: <NavLink to='fridge/category'>Category</NavLink>,
                             },
                             {
                                 key: '4-3',
-                                label: <NavLink to='fridge/recipe'>Lịch sử</NavLink>,
+                                label: <NavLink to='fridge/history'>Lịch sử</NavLink>,
                             },
-                            {
-                                key: '4-4',
-                                label: <NavLink to='fridge/recipe'>Công thức</NavLink>,
-                            },
+                           
                         ],
                     },
                 ]}

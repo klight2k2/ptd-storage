@@ -16,6 +16,21 @@ class Http {
                 return response.metadata;
             });
     };
+    static upload = async (url, data) => {
+        return await fetch(url, {
+            method: 'POST',
+            body: (data),
+            headers: new Headers({
+               
+                Authorization: localStorage.getItem('access_token'),
+            }),
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                message.open({ type: 'success', content: response.message });
+                return response.metadata;
+            });
+    };
 
     static get = async (url) => {
         return await fetch(url, {
@@ -42,3 +57,5 @@ class Http {
 }
 
 export default Http;
+
+export const BASE_URL="http://localhost:8000"

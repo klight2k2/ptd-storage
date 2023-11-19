@@ -12,6 +12,37 @@ class RecipeService {
             return null;
         }
     };
+    getAll= async ()=>{
+        try {
+            let url = `${BaseUrl}/`;
+         
+            return await Http.get(url);
+        } catch (e) {
+            console.log('login error', e);
+            return null;
+        }
+    }
+    createRecipe= async (data)=>{
+        try {
+            let url = `${BaseUrl}/`;
+         
+            return await Http.upload(url, data);
+        } catch (e) {
+            console.log('login error', e);
+            return null;
+        }
+    }
+
+    deleteRecipe= async (recipe_id)=>{
+        try {
+            let url = `${BaseUrl}/${recipe_id}`;
+         
+            return await Http.delete(url);
+        } catch (e) {
+            console.log('login error', e);
+            return null;
+        }
+    }
 }
 
 export default new RecipeService();

@@ -3,11 +3,18 @@ const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
+const path = require("path");
 const app = express();
 const cors= require("cors");  
 // init middlewares
 app.use(cors())
-app.use(helmet());
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb',extended: true }));
+
+
+// app.use(helmet({
+//   crossOriginResourcePolicy: false,
+// }));
 app.use(morgan("dev"));
 app.use(compression());
 app.use(express.json());
@@ -16,12 +23,13 @@ app.use(
     extended: true,
   })
 );
-
 // init db
 require("./dbs/init.mongodb");
 const { checkOVerload } = require("./helpers/check.connect");
 // checkOVerload();
 // init routes
+
+app.use('/images',express.static(path.join('images')))
 
 app.use("", require("./routes"));
 

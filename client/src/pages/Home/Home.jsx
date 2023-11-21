@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import IngredientService from '../../services/IngredientService';
+import ImportService from '../../services/ImportService';
 import RecipeService from '../../services/RecipeService';
 import { convertToDate, formatDate, formatImageLink } from '../../utils/timeUtil';
 import { Space, Image } from 'antd';
@@ -14,7 +14,7 @@ export default function Home() {
         const currentDate = new Date();
         var currentDay = currentDate.getDate();
         currentDate.setDate(currentDay + 3);
-        const res = await IngredientService.getSoonExpiredImportIngredient(null, formatDate(currentDate));
+        const res = await ImportService.getSoonExpiredImportIngredient(null, formatDate(currentDate));
         if (res) {
             setIngredients(res);
             console.log('home', res);

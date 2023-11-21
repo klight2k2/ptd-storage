@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
-import IngredientService from '../../services/IngredientService';
+import ImportService from '../../services/ImportService';
 
 import "./statistic.scss"
 const CustomLabel = ({ x, y, value, unit, index, width }) => {
@@ -17,7 +17,7 @@ export default function Statistic() {
     const [data, setData] = useState([]);
 
     const handleGetStatistic = async () => {
-        const res = await IngredientService.statisticImportIngredient();
+        const res = await ImportService.statisticImportIngredient();
         setData(res);
     };
     useEffect(() => {

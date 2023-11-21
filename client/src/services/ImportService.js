@@ -1,19 +1,30 @@
 import Http from './api';
-const BaseUrl = `http://localhost:8000/api/ingredient`;
+const BaseUrl = `http://localhost:8000/api/import`;
 
-class IngredientService {
-    getAll = async (fromDate = null, toDate = null) => {
+class ImportService {
+    getSoonExpiredImportIngredient = async (fromDate = null, toDate = null) => {
         try {
-           
-            return await Http.get(BaseUrl);
+            let url = `${BaseUrl}/exprire-soon?`;
+            if (fromDate) url += `fromDate="${fromDate}&`;
+            if (toDate) url += `toDate="${toDate}`;
+         
+            return await Http.get(url);
         } catch (e) {
-            console.log('IngredientService get all error', e);
+            console.log('login error', e);
             return null;
         }
     };
     getAllImportIngredient = async () => {
         try {
             return await Http.get(BaseUrl);
+        } catch (e) {
+            console.log('login error', e);
+            return null;
+        }
+    };
+    createImportIngredient = async (data) => {
+        try {
+            return await Http.post(BaseUrl,data);
         } catch (e) {
             console.log('login error', e);
             return null;
@@ -50,4 +61,4 @@ class IngredientService {
     }
 }
 
-export default new IngredientService();
+export default new ImportService();

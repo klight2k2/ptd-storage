@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import RecipeService from '../../services/RecipeService';
 import { FileAddOutlined, UploadOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Select, Input, Modal, Button, Popconfirm, Form, Space, Divider } from 'antd';
-import IngredientService from '../../services/IngredientService';
+import ImportService from '../../services/ImportService';
 import { formatImageLink } from '../../utils/timeUtil';
 const { Search } = Input;
 const { Option } = Select;
@@ -47,7 +47,7 @@ export default function Recipe() {
     };
 
     const handleGetIngredient = async () => {
-        const res = await IngredientService.getAllIngredient();
+        const res = await ImportService.getAllIngredient();
         let units = {};
         res.map((item) => {
             units[item._id] = item.ingredient_unit;
@@ -234,7 +234,7 @@ export default function Recipe() {
                                                 <Select
                                                     placeholder='Select ingredient'
                                                     onChange={(e) => {
-                                                        console.log('Selecti', e);
+                                                       
                                                         console.log('Selecti', form.getFieldsValue());
                                                     }}
                                                 >

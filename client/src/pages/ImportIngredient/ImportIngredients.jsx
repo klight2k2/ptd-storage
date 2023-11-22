@@ -1,9 +1,9 @@
-import { Select, Input, Modal, Button, Popconfirm, Form, Space, Divider } from 'antd';
+import { Select, Input, Modal, Button, Popconfirm, Form, InputNumber, Divider,Tag } from 'antd';
 import './importIngredients.scss';
 import { useContext, useEffect, useState } from 'react';
 import ImportService from '../../services/ImportService';
 import { AuthContext } from '../../context/AuthContext';
-import { convertToDate, formatImageLink } from '../../utils/timeUtil';
+import { convertToDate, formatImageLink, isExpired } from '../../utils/timeUtil';
 import { FileAddOutlined, UploadOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import IngredientService from '../../services/IngredientService';
 const { Option } = Select;
@@ -14,6 +14,8 @@ const ImportIngredients = () => {
     const [units, setUnits] = useState({});
     const [ingredients, setIngredients] = useState([]);
     const [reload, setReload] = useState(false);
+    const [takeModal, setTakeModel] = useState(false);
+    const [selectedImport, setSelectedImport] = useState();
 
     const handleGetIngredients = async () => {
         const data = await IngredientService.getAll();
@@ -21,7 +23,7 @@ const ImportIngredients = () => {
         data.map((item) => {
             units[item._id] = item.ingredient_unit;
         });
-        console.log("unit",units)
+        console.log('unit', units);
         setUnits(units);
         const mapData = data.map((item) => {
             return { value: item._id, label: item.ingredient_name, item };
@@ -30,6 +32,7 @@ const ImportIngredients = () => {
     };
 
     const [form] = Form.useForm();
+    const [takeForm] = Form.useForm();
     const onSearch = (value, _e, info) => {
         // const filteredRecipe = recipes.filter((recipe) => {
         //     return recipe.recipe_name.includes(value);
@@ -40,18 +43,51 @@ const ImportIngredients = () => {
         setOpen(true);
         await handleGetIngredients();
     };
+
+    const handleTakeImport = async () => {
+        takeForm.submit();
+    };
+    const onFinishTakeForm = async (values) => {
+        console.log('Success:', values);
+        const res = await ImportService.takeImportIngredient({ ...values, import_id: selectedImport._id });
+        if (res) {
+            setTakeModel(false);
+            takeForm.resetFields();
+            getListIngredients();
+        }
+    };
+
+    const handleOpenTakeModal = async (import_ingredient) => {
+        takeForm.resetFields();
+        setTakeModel(true);
+        console.log(import_ingredient);
+        setSelectedImport(import_ingredient);
+    };
+
     const handleChangeIngredient = async (e) => {
         console.log('ingredient', e);
     };
+
+    const handleThrowImportIngredient = async (import_id) => {
+        const res = await ImportService.throwImportIngredient(import_id);
+        if (res) {
+            await getListIngredients();
+        }
+    };
     const filterOption = (input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
- 
-    const onFinish = (values) => {
+
+    const onFinish = async (values) => {
         console.log('Success:', values);
+        const res = await ImportService.createImportIngredient(values);
+        if (res) {
+            setOpen(false);
+            form.resetFields();
+            getListIngredients();
+        }
     };
     const handleSubmit = async () => {
-        console.log("submit import", form.getFieldsValue())
-        
-
+        console.log('submit import', form.getFieldsValue());
+        form.submit();
     };
     const [open, setOpen] = useState(false);
     const getListIngredients = async () => {
@@ -67,10 +103,10 @@ const ImportIngredients = () => {
 
     return (
         <div className='import-container'>
-            <h3>DANH SÁCH CÁC LOẠI NGUYÊN LIỆU</h3>
+            <h3>材料バッチの完全なリスト</h3>
 
             <div className='import-action'>
-                <Search className='import-search' placeholder='input search text' onSearch={onSearch} />
+                <Search className='import-search' placeholder='Enter ingredient name ...' onSearch={onSearch} />
                 <Button onClick={handleOpen} icon={<FileAddOutlined />}>
                     {' '}
                     Import ingredient
@@ -80,18 +116,42 @@ const ImportIngredients = () => {
                 let ingredientInfo = item.ingredient;
                 return (
                     <>
-                        <div className='import' key={index}>
-                            <img className='import-img' src={formatImageLink(ingredientInfo.image_url)} alt='' />
-                            <div className='import-info'>
-                                <p className='title'>{ingredientInfo.ingredient_name}</p>
-                                <p>Hạn sử dụng :{convertToDate(item.import_exp)} </p>
-                                <p>
-                                    khối lượng:{item.orginal_amount} {ingredientInfo.ingredient_unit}
-                                </p>
-                                <p>
-                                    Còn lại: {item.remain_amount} {ingredientInfo.ingredient_unit}
-                                </p>
-                                <p>Note: {item.note}</p>
+                        <div className='import-wrapper'>
+                            {' '}
+                            <div className='import' key={index}>
+                                <img className='import-img' src={formatImageLink(ingredientInfo.image_url)} alt='' />
+                                <div className='import-info'>
+                                    <p className='title'>{ingredientInfo.ingredient_name}</p>
+                                    <p>Exp :{convertToDate(item.import_exp)} </p>
+                                    <p>
+                                        Amount:{item.original_amount} {ingredientInfo.ingredient_unit}
+                                    </p>
+                                    <p>
+                                        Remain: {item.remain_amount} {ingredientInfo.ingredient_unit}
+                                    </p>
+                                    <p>Note: {item.note}</p>
+                                    <p>{isExpired(item.import_exp) && <Tag color="red">Expired</Tag>}</p>
+                                </div>
+                            </div>
+                            <div className='mt-16'>
+                                <Popconfirm
+                                    title='Throw the ingredient'
+                                    description='Are you sure to throw this ingredient?'
+                                    onConfirm={()=>{handleThrowImportIngredient(item._id)}}
+                                    okText='Yes'
+                                    cancelText='No'
+                                    className='mr-8'
+                                >
+                                <Button>Throw</Button>
+                                </Popconfirm>
+                                <Button
+                                    type='primary'
+                                    onClick={() => {
+                                        handleOpenTakeModal(item);
+                                    }}
+                                >
+                                    Take
+                                </Button>
                             </div>
                         </div>
                         <Divider />
@@ -133,12 +193,10 @@ const ImportIngredients = () => {
                             showSearch
                             options={ingredients}
                             filterOption={filterOption}
-                           
                             onChange={(e) => {
-                                        setReload(!reload)                 
-                                
+                                setReload(!reload);
                             }}
-                            placeholder='Select a person'
+                            placeholder='Select a ingredient'
                         ></Select>
                     </Form.Item>
                     <Form.Item
@@ -155,7 +213,7 @@ const ImportIngredients = () => {
                     </Form.Item>
                     <Form.Item
                         label='Amount'
-                        name='orginal_amount'
+                        name='original_amount'
                         rules={[
                             {
                                 required: true,
@@ -163,9 +221,7 @@ const ImportIngredients = () => {
                             },
                         ]}
                     >
-                        <Input 
-                          addonAfter={`${units[form.getFieldsValue()?.ingredient] || ''}`}
-                        />
+                        <Input addonAfter={`${units[form.getFieldsValue()?.ingredient] || ''}`} />
                     </Form.Item>
                     <Form.Item
                         label='Note'
@@ -178,6 +234,28 @@ const ImportIngredients = () => {
                         ]}
                     >
                         <Input />
+                    </Form.Item>
+                </Form>
+            </Modal>
+
+            <Modal
+                title={`Lấy ra ${selectedImport?.ingredient?.ingredient_name}`}
+                open={takeModal}
+                onOk={handleTakeImport}
+                onCancel={() => setTakeModel(false)}
+            >
+                <Form form={takeForm} onFinish={onFinishTakeForm}>
+                    <Form.Item
+                        label='Số lượng'
+                        name='take_amount'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your take amount!',
+                            },
+                        ]}
+                    >
+                        <InputNumber max={Number(selectedImport?.remain_amount)} addonAfter={selectedImport?.ingredient?.ingredient_unit} />
                     </Form.Item>
                 </Form>
             </Modal>

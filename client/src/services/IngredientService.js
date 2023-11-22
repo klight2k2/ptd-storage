@@ -11,9 +11,19 @@ class IngredientService {
             return null;
         }
     };
-    getAllImportIngredient = async () => {
+    createIngredient = async (data) => {
         try {
-            return await Http.get(BaseUrl);
+            return await Http.upload(BaseUrl,data);
+        } catch (e) {
+            console.log('login error', e);
+            return null;
+        }
+    };
+    deleteIngredient = async (id) => {
+        try {
+            let url = `${BaseUrl}/${id}`;
+
+            return await Http.delete(url);
         } catch (e) {
             console.log('login error', e);
             return null;

@@ -21,7 +21,10 @@ class RecipeService {
     };
 
     static updateRecipe = async ({ recipe_id, recipe }) => {
-        const foundRecipe = await recipeModel.findByIdAndUpdate(recipe_id, recipe);
+        let { recipe_name, recipe_description, image_url, recipe_ingredients,time_cook } = recipe;
+        recipe_ingredients=JSON.parse(recipe_ingredients)
+
+        const foundRecipe = await recipeModel.findByIdAndUpdate(recipe_id, { recipe_name, recipe_description, image_url, recipe_ingredients,time_cook });
 
         return foundRecipe;
     };

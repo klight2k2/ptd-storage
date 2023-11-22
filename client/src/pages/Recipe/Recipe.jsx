@@ -19,8 +19,10 @@ export default function Recipe() {
     const [recipes, setRecipes] = useState([]);
     const [ingredients, setIngredient] = useState([]);
     const [selectedIngredient, setSelectedIngredients] = useState([]);
+    const [selectedRecipe, setSelectedRecipe] = useState([]);
     const [units, setUnits] = useState([]);
     const [form] = Form.useForm();
+    const [editForm] = Form.useForm();
     const [filteredRecipes, setFilteredRecipes] = useState([]);
     const [open, setOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -56,6 +58,7 @@ export default function Recipe() {
         setIngredient(res);
     };
     const handleOpen = () => {
+        setSelectedRecipe()
         handleGetIngredient();
         setOpen(true);
     };
@@ -81,6 +84,17 @@ export default function Recipe() {
         }
     };
 
+    const handleOpenEdit = async (recipe) => {
+        const ingre = recipe.recipe_ingredients.map((item) => ({
+            ingredient: item.ingredient._id,
+            amount: item.amount,
+        }));
+        await handleOpen();
+        form.setFieldsValue({ ...recipe, recipe_ingredients: ingre });
+        setPreviewUrl(formatImageLink(recipe.image_url));
+        console.log(recipe);
+        setSelectedRecipe(recipe);
+    };
     const handleSubmit = async () => {
         console.log(form.getFieldsValue());
         const formValue = form.getFieldsValue();
@@ -90,10 +104,17 @@ export default function Recipe() {
         formData.append('time_cook', formValue.time_cook);
         formData.append('recipe_ingredients', JSON.stringify(formValue.recipe_ingredients));
         formData.append('image', selectedFile);
-        const res = await RecipeService.createRecipe(formData);
+        let res;
+        if (!selectedRecipe) res = await RecipeService.createRecipe(formData);
+        else {
+            console.log('recipe', selectedRecipe);
+            formData.append('image_url', selectedRecipe.image_url);
+            res = await RecipeService.updateRecipe(selectedRecipe._id, formData);
+        }
         if (res) {
             setSelectedFile();
             setOpen(false);
+            setSelectedRecipe();
             setPreviewUrl('');
             form.resetFields();
         }
@@ -101,12 +122,12 @@ export default function Recipe() {
     return (
         <>
             <div className='recipe-container'>
-                <h3>Danh sách công thức</h3>
+                <h3>レシピのリスト </h3>
                 <div className='recipe-action'>
-                    <Search className='recipe-search' placeholder='input search text' onSearch={onSearch} />
+                    <Search className='recipe-search' placeholder='Enter recipe name...' onSearch={onSearch} />
                     <Button onClick={handleOpen} icon={<FileAddOutlined />}>
                         {' '}
-                        Thêm công thức
+                       Add recipe
                     </Button>
                 </div>
                 <div className='recipes-list'>
@@ -119,28 +140,40 @@ export default function Recipe() {
 
                                         <div className='recipe-info'>
                                             <h3>{item.recipe_name}</h3>
-                                            <p>Thời gian nấu: {item.time_cook}</p>
+                                            <p>Time cook: {item.time_cook}</p>
                                             <p>
-                                                Nguyên liệu:
-                                                <div className='grid-2'>
+                                                Ingredients:
+                                                <div className='grid-2 mt-16'>
                                                     {item.recipe_ingredients?.map((ingre) => {
                                                         const ingredient = ingre.ingredient;
                                                         return <li>{`${ingredient?.ingredient_name} ${ingre.amount} ${ingredient?.ingredient_unit}`}</li>;
                                                     })}
                                                 </div>
                                             </p>
-                                            <p>Mô tả: {item.recipe_description}</p>
+                                            <p>Description: {item.recipe_description}</p>
                                         </div>
                                     </div>
-                                    <Popconfirm
-                                        title='Delete the recipe'
-                                        description='Are you sure to delete this recipe?'
-                                        onConfirm={()=>handleDeleteRecipe(item._id)}
-                                        okText='Yes'
-                                        cancelText='No'
-                                    >
-                                    <DeleteOutlined style={{ fontSize: 24 }} />
-                                    </Popconfirm>
+                                    <div style={{display:'flex'}}>
+                                        <Popconfirm
+                                            title='Delete the recipe'
+                                            description='Are you sure to delete this recipe?'
+                                            onConfirm={() => handleDeleteRecipe(item._id)}
+                                            okText='Yes'
+                                            cancelText='No'
+                                            className='mr-8'
+                                        >
+                                            <Button>Delete</Button>
+                                            {/* <DeleteOutlined style={{ fontSize: 24 }} /> */}
+                                        </Popconfirm>
+                                        <Button
+                                        type='primary'
+                                            onClick={() => {
+                                                handleOpenEdit(item);
+                                            }}
+                                        >
+                                            Edit
+                                        </Button>
+                                    </div>
                                 </div>
                                 <Divider></Divider>
                             </>
@@ -149,7 +182,7 @@ export default function Recipe() {
                 </div>
             </div>
 
-            <Modal title='Thêm công thức' open={open} onOk={handleSubmit} onCancel={() => setOpen(false)}>
+            <Modal title={selectedRecipe ? 'Sửa công thức' : 'Thêm công thức'} open={open} onOk={handleSubmit} onCancel={() => setOpen(false)}>
                 <Form
                     name='basic'
                     form={form}
@@ -234,7 +267,6 @@ export default function Recipe() {
                                                 <Select
                                                     placeholder='Select ingredient'
                                                     onChange={(e) => {
-                                                       
                                                         console.log('Selecti', form.getFieldsValue());
                                                     }}
                                                 >
@@ -246,7 +278,7 @@ export default function Recipe() {
                                             <Form.Item noStyle name={[subField.name, 'amount']}>
                                                 <Input
                                                     placeholder='Amount'
-                                                    addonAfter={`${units[form.getFieldsValue()?.recipe_ingredients[index]?.ingredient] || ''}`}
+                                                    addonAfter={`${units[form?.getFieldsValue()?.recipe_ingredients[index]?.ingredient] || ''}`}
                                                 />
                                             </Form.Item>
                                             <CloseOutlined

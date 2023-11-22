@@ -9,23 +9,26 @@ class IngredientController {
     };
 
     createImportIngredient = async (req, res, next) => {
+      console.log('create import',req.fridge)
         return new SuccessResponse({
-            message: 'Successfully create ingredient',
+            message: 'import ingredient successfully',
             metadata: await ImportService.createImportIngredient({
-                ...req.body,
+                ...req.body,fridge: req.fridge
             }),
         }).send(res);
     };
     getExpiredImportIngredient = async (req, res, next) => {
+        console.log('get expiring import',req.query)
         return new SuccessResponse({
             message: 'Successfully create ingredient',
             metadata: await ImportService.getExpiredImportIngredient({ fridge_id: req.fridge, date_exp: req.query?.dateExp }),
         }).send(res);
     };
     getExpiredSoonImportIngredient = async (req, res, next) => {
+        console.log('get expiring soon import',req.query.toDate)
         return new SuccessResponse({
             message: 'Successfully create ingredient',
-            metadata: await ImportService.getExpiredImportIngredient({
+            metadata: await ImportService.getExpiredSoonImportIngredient({
                 fridge_id: req.fridge,
                 from_date: req.query?.fromDate,
                 to_date: req.query?.toDate,

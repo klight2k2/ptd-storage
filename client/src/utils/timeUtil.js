@@ -13,6 +13,12 @@ export const convertToDateISO= (date)=>{
 }
 
 
+export const isExpired=(date)=>{
+  const newDate=new Date(date)
+  const currentDate=new Date()
+  return currentDate >newDate
+}
+
 export const formatDate=(date)=> {
     var year = date.getFullYear();
     var month = date.getMonth() + 1;

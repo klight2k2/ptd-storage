@@ -30,6 +30,24 @@ class ImportService {
             return null;
         }
     };
+    takeImportIngredient = async (data) => {
+        try {
+            let url = `${BaseUrl}/take`;
+            return await Http.post(url,data);
+        } catch (e) {
+            console.log('login error', e);
+            return null;
+        }
+    };
+    throwImportIngredient = async (import_id) => {
+        try {
+            let url = `${BaseUrl}/${import_id}/throw`;
+            return await Http.delete(url);
+        } catch (e) {
+            console.log('login error', e);
+            return null;
+        }
+    };
 
     statisticImportIngredient= async()=>{
         try {

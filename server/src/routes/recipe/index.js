@@ -11,6 +11,7 @@ const storage = require('../../utils/storage')
 router.get('/',authentication,asyncHandler(recipeController.getAll) )
 router.get('/lastest',authentication,asyncHandler(recipeController.getLastestRecipe) )
 router.post('/',authentication,(storage),asyncHandler(recipeController.createRecipe) )
+router.post('/:id',authentication,(storage),asyncHandler(recipeController.updateRecipe) )
 router.delete('/:id',authentication,asyncHandler(recipeController.deleteRecipe) )
 
 module.exports = router

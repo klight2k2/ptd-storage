@@ -17,34 +17,34 @@ export default function Sidebar() {
                     {
                         key: '1',
                         icon: <HomeOutlined />,
-                        label: <NavLink to='home'>Home</NavLink>,
+                        label: <NavLink to='home'>ホーム</NavLink>,
                     },
                     {
                         key: '2',
                         icon: <BarChartOutlined />,
-                        label: <NavLink to='statistic'>Thống kê</NavLink>,
+                        label: <NavLink to='statistic'>統計</NavLink>,
                     },
                     {
                         key: '3',
                         icon: <TiBook fontSize={24} />,
-                        label: <NavLink to='recipe'>Quản lý công thức</NavLink>,
+                        label: <NavLink to='recipe'>レシピ</NavLink>,
                     },
                     {
                         key: '4',
                         icon: <GrStorage />,
-                        label: <NavLink to='fridge'>Quản lí tủ lạnh</NavLink>,
+                        label: <NavLink to='fridge'>冷蔵庫</NavLink>,
                         children: [
                             {
                                 key: '4-1',
-                                label: <NavLink to='fridge/ingredients'>Thực phẩm</NavLink>,
+                                label: <NavLink to='fridge/ingredients'>在庫ページ</NavLink>,
                             },
                             {
                                 key: '4-2',
-                                label: <NavLink to='fridge/category'>Category</NavLink>,
+                                label: <NavLink to='fridge/category'>在庫の数種</NavLink>,
                             },
                             {
                                 key: '4-3',
-                                label: <NavLink to='fridge/history'>Lịch sử</NavLink>,
+                                label: <NavLink to='fridge/history'>歴史</NavLink>,
                             },
                            
                         ],

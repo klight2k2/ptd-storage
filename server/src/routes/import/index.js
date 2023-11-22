@@ -11,7 +11,7 @@ router.get('/',asyncHandler(importController.getAllImportIngredient) )
 router.post('/take',asyncHandler(importController.takeImportIngredient) )
 router.get('/statistic',asyncHandler(importController.statisticIngredient) )
 router.get('/expired',asyncHandler(importController.getExpiredImportIngredient) )
-router.get('/exprire-soon',asyncHandler(importController.getExpiredImportIngredient) )
+router.get('/exprire-soon',asyncHandler(importController.getExpiredSoonImportIngredient) )
 router.delete('/:id/throw',asyncHandler(importController.throwImportIngredient) )
 
 

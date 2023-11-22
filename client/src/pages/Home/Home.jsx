@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import ImportService from '../../services/ImportService';
 import RecipeService from '../../services/RecipeService';
-import { convertToDate, formatDate, formatImageLink } from '../../utils/timeUtil';
-import { Space, Image } from 'antd';
+import { convertToDate, formatDate, formatImageLink, isExpired } from '../../utils/timeUtil';
+import { Space, Image,Tag ,Modal} from 'antd';
 
 import './home.scss';
 
 export default function Home() {
     const [ingredients, setIngredients] = useState([]);
     const [recipes, setRecipes] = useState([]);
+    const [selectedRecipe, setSelectedRecipe] = useState();
+
 
     const handleGetIngredient = async () => {
         const currentDate = new Date();
@@ -27,13 +29,27 @@ export default function Home() {
             console.log('home', res);
         }
     };
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = (recipe) => {
+        setSelectedRecipe(recipe);
+
+        setIsModalOpen(true);
+      };
+    
+      const handleOk = () => {
+        setIsModalOpen(false);
+      };
+    
+      const handleCancel = () => {
+        setIsModalOpen(false);
+      };
     useEffect(() => {
         handleGetIngredient();
         handleGetRecipe();
     }, []);
     return (
         <div>
-            <h3>Nguyên liệu sắp hết hạn</h3>
+            <h3 className='mb-16'>期限切れが近づいている材料</h3>
             <div className='ingredient-container'>
                 {ingredients.map((item) => {
                     const ingredientInfo = item.ingredient;
@@ -41,32 +57,35 @@ export default function Home() {
                         <div className='ingredient'>
                             <div className='ingredient-info'>
                                 <p>{ingredientInfo.ingredient_name}</p>
-                                <p>Hạn sử dụng :{convertToDate(item.import_exp)} </p>
+                                <p>Exp :{convertToDate(item.import_exp)} </p>
                                 <p>
-                                    khối lượng:{item.orginal_amount} {ingredientInfo.ingredient_unit}
+                                    amount:{item.original_amount} {ingredientInfo.ingredient_unit}
                                 </p>
                                 <p>
-                                    Còn lại: {item.remain_amount} {ingredientInfo.ingredient_unit}
+                                   remain: {item.remain_amount} {ingredientInfo.ingredient_unit}
                                 </p>
+                                <p>{isExpired(item.import_exp)? <Tag color='red'>Expired</Tag>:<Tag color='gold'>Comming soon expired</Tag>}</p>
                             </div>
                             <img
                                 className='ingredient-img'
-                                src='https://forza.com.vn/wp-content/uploads/2021/03/ky-thuat-so-che-nguyen-lieu-220321-06-e1616398596327.jpg'
+                                src={formatImageLink(ingredientInfo.image_url)}
                             ></img>
                         </div>
                     );
                 })}
             </div>
 
-            <h3 className='mt-16 mb-16'>Danh sách công thức mới thêm </h3>
+            <h3 className='mt-16 mb-16'>新しいレシピのリスト </h3>
             <div  className='ingredient-container'>
                 {recipes.map((item) => {
                     return (
-                        <div className='ingredient'>
+                        <div className='ingredient' onClick={()=>{
+                            showModal(item)
+                        }}>
                             <div className='ingredient-info'>
                                 <p>{item.recipe_name}</p>
-                                <p>Mô tả: {item.recipe_description} </p>
-                                <p>Thời gian nấu: {item.time_cook} </p>
+                                <p>Description: {item.recipe_description} </p>
+                                <p>Time cook: {item.time_cook} </p>
                             </div>
                             <img
                                 className='ingredient-img'
@@ -76,6 +95,28 @@ export default function Home() {
                     );
                 })}
             </div>
+
+            <Modal title="Recipe detail" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={700}>
+            <div className='recipe'>
+                                        <img className='recipe-img' src={formatImageLink(selectedRecipe?.image_url)} alt='' />
+
+                                        <div className='recipe-info' >
+                                            <h3>{selectedRecipe?.recipe_name}</h3>
+                                            <p>Time cook: {selectedRecipe?.time_cook}</p>
+                                            <p>
+                                                Ingredients:
+                                                <div className='grid-2 mt-16'>
+                                                    {selectedRecipe?.recipe_ingredients?.map((ingre) => {
+                                                        const ingredient = ingre.ingredient;
+                                                        return <li>{`${ingredient?.ingredient_name} ${ingre.amount} ${ingredient?.ingredient_unit}`}</li>;
+                                                    })}
+                                                </div>
+                                            </p>
+                                            <p>Description: {selectedRecipe?.recipe_description}</p>
+                                        </div>
+                                    </div>
+    
+      </Modal>
         </div>
     );
 }

@@ -32,6 +32,16 @@ class RecipeService {
             return null;
         }
     }
+    updateRecipe= async (recipe_id,data)=>{
+        try {
+            let url = `${BaseUrl}/${recipe_id}`;
+         
+            return await Http.upload(url, data);
+        } catch (e) {
+            console.log('login error', e);
+            return null;
+        }
+    }
 
     deleteRecipe= async (recipe_id)=>{
         try {

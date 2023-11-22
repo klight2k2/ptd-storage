@@ -8,6 +8,7 @@ class Http {
             headers: new Headers({
                 'Content-Type': 'application/json; charset=UTF-8',
                 Authorization: localStorage.getItem('access_token'),
+                fridge: localStorage.getItem('fridge'),
             }),
         })
             .then((response) => response.json())
@@ -23,6 +24,7 @@ class Http {
             headers: new Headers({
                
                 Authorization: localStorage.getItem('access_token'),
+                fridge: localStorage.getItem('fridge'),
             }),
         })
             .then((response) => response.json())
@@ -51,7 +53,14 @@ class Http {
             headers: new Headers({
                 'Content-Type': 'application/json; charset=UTF-8',
                 Authorization: localStorage.getItem('access_token'),
+                fridge: localStorage.getItem('fridge'),
             }),
+        })
+        
+        .then((response) => response.json())
+        .then((response) => {
+            message.open({ type: 'success', content: response.message });
+            return response.metadata;
         });
     };
 }

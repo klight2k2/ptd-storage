@@ -3,22 +3,20 @@ const IngredientService = require('../services/ingredient.service');
 class IngredientController {
     getAllIngredient = async (req, res, next) => {
         return new SuccessResponse({
-            message: 'Successfully code generation',
+            // message: 'Successfully code generation',
             metadata: await IngredientService.getAll(),
         }).send(res);
     };
 
     createIngredient = async (req, res, next) => {
         return new SuccessResponse({
-            message: 'Successfully create ingredient',
-            metadata: await IngredientService.createIngredient({
-                ...req.body,
-            }),
+            message: 'create category successfully',
+            metadata: await IngredientService.createIngredient({ ...req.body,image_url:req?.file?.filename }),
         }).send(res);
     };
     updateIngredient = async (req, res, next) => {
         return new SuccessResponse({
-            message: 'Successfully update ingredient',
+            message: 'update catgory successfully ',
             metadata: await IngredientService.updateIngredient({
                 ingredient_id: req.params.id,
                 ingredient: req.body,
@@ -28,7 +26,7 @@ class IngredientController {
 
     deleteIngredient = async (req, res, next) => {
         return new SuccessResponse({
-            message: 'Successfully delete ingredient',
+            message: 'delete category successfully',
             metadata: await IngredientService.deleteIngredient({
                 ingredient_id: req.params.id,
             }),

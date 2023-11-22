@@ -9,9 +9,17 @@ class RecipeController {
     };
     createRecipe = async (req, res, next) => {
         console.log("hello",req.body)
+        const image_url=req?.file?.filename ||req.body?.image_url
         return new SuccessResponse({
             message: 'Successfully create recipe',
-            metadata: await RecipeService.createRecipe({ user_id: req.user._id, recipe: { ...req.body,image_url:req?.file?.filename } }),
+            metadata: await RecipeService.createRecipe({ user_id: req.user._id, recipe: { ...req.body,image_url } }),
+        }).send(res);
+    };
+    updateRecipe = async (req, res, next) => {
+        const image_url=req?.file?.filename ||req.body?.image_url
+        return new SuccessResponse({
+            message: 'Successfully update recipe',
+            metadata: await RecipeService.updateRecipe({ recipe_id: req.params.id, recipe: { ...req.body,image_url } }),
         }).send(res);
     };
     deleteRecipe = async (req, res, next) => {

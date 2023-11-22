@@ -13,7 +13,7 @@ var importSchema = new mongoose.Schema(
         note: {
             type: String,
         },
-        orginal_amount: {
+        original_amount: {
             type: Number,
             required: true,
         },

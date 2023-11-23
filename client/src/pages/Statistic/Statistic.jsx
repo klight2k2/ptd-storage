@@ -25,7 +25,7 @@ export default function Statistic() {
     }, []);
     return (
         <div className='statistic-container'>
-            <h3>Thống kê nguyên liệu trong tủ lạnh</h3>
+            <h3 className='mb-16'>原材料統計</h3>
             <ResponsiveContainer width='100%'>
                 <BarChart
                     width={500}

@@ -3,7 +3,7 @@ const { BadRequestError, NotFoundError } = require('../core/error.response');
 const logModel = require('../models/log.model');
 class ImportService {
      getAll = async ({ fridge_id, is_delete = false }) => {
-        return importModel.find({ fridge: fridge_id, is_delete }).populate('ingredient').lean();
+        return importModel.find({ fridge: fridge_id, is_delete }).populate('ingredient').sort({import_exp:-1}).lean();
     };
 
      createImportIngredient = async ({ import_exp, original_amount, is_delete = false, fridge, ingredient ,note}) => {
@@ -46,7 +46,7 @@ class ImportService {
      getExpiredSoonImportIngredient = async ({ fridge_id, from_date, to_date, is_delete = false }) => {
         let currentDate = new Date();
         var currentDay = currentDate.getDate();
-        currentDate.setDate(currentDay + 6);
+        currentDate.setDate(currentDay + 3);
         console.log("fridge_idfridge_id",currentDate)
 
         return await importModel

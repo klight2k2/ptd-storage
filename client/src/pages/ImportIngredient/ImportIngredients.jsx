@@ -10,6 +10,7 @@ const { Option } = Select;
 const { Search } = Input;
 const ImportIngredients = () => {
     const [importsIngredient, setImportIngredients] = useState([]);
+    const [filteredImportsIngredient, setFilteredImportIngredients] = useState([]);
     const { currentUser, setCurrentUser } = useContext(AuthContext);
     const [units, setUnits] = useState({});
     const [ingredients, setIngredients] = useState([]);
@@ -34,10 +35,10 @@ const ImportIngredients = () => {
     const [form] = Form.useForm();
     const [takeForm] = Form.useForm();
     const onSearch = (value, _e, info) => {
-        // const filteredRecipe = recipes.filter((recipe) => {
-        //     return recipe.recipe_name.includes(value);
-        // });
-        // setFilteredRecipes(filteredRecipe);
+        const filteredRecipe = importsIngredient.filter((import_ingre) => {
+            return import_ingre.ingredient.ingredient_name.includes(value);
+        });
+        setFilteredImportIngredients(filteredRecipe);
     };
     const handleOpen = async () => {
         setOpen(true);
@@ -95,6 +96,7 @@ const ImportIngredients = () => {
         const response = await ImportService.getAllImportIngredient();
         console.log(response);
         setImportIngredients(response);
+        setFilteredImportIngredients(response);
     };
 
     useEffect(() => {
@@ -112,7 +114,7 @@ const ImportIngredients = () => {
                     Import ingredient
                 </Button>
             </div>
-            {importsIngredient.map((item, index) => {
+            {filteredImportsIngredient.map((item, index) => {
                 let ingredientInfo = item.ingredient;
                 return (
                     <>
@@ -246,7 +248,7 @@ const ImportIngredients = () => {
             >
                 <Form form={takeForm} onFinish={onFinishTakeForm}>
                     <Form.Item
-                        label='Số lượng'
+                        label='Take amount'
                         name='take_amount'
                         rules={[
                             {

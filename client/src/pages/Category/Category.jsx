@@ -78,7 +78,7 @@ export default function Category() {
 
     return (
         <div>
-            <h3>DANH SÁCH Category</h3>
+            <h3>カテゴリー</h3>
 
             <div className='import-action'>
                 <Search className='import-search' placeholder='input search text' onSearch={onSearch} />
@@ -162,7 +162,7 @@ export default function Category() {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your category name!',
+                                message: 'Please input your category unit!',
                             },
                         ]}
                     >

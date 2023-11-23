@@ -226,7 +226,7 @@ export default function Recipe() {
                             },
                         ]}
                     >
-                        <Input.TextArea showCount maxLength={100} />
+                        <Input.TextArea showCount maxLength={1000} />
                     </Form.Item>
                     <Form.Item
                         label='Time cook'

@@ -1,11 +1,14 @@
 import React from 'react';
 import { Button, Form, Input, Image } from 'antd';
+import AuthSerivce from '../../services/AuthService';
 
 import './register.scss';
 import { NavLink } from 'react-router-dom';
 export default function Register() {
-    const onFinish = (values) => {
+    const onFinish = async(values) => {
+        const res= await AuthSerivce.signup(values)
         console.log('Success:', values);
+
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);

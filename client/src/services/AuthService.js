@@ -11,6 +11,16 @@ class AuthService {
             return null;
         }
     };
+
+    signup = async (user) => {
+        try {
+            const url= `${BaseUrl}/signup`
+            return await Http.post(url, user);
+        } catch (e) {
+            console.log('login error', e);
+            return null;
+        }
+    };
 }
 
 

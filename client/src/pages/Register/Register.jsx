@@ -11,7 +11,7 @@ export default function Register() {
     const [form]=Form.useForm()
     const onFinish = async (values) => {
         console.log('Success:', values);
-         const res=await AuthService.register(values)
+         const res=await AuthService.signup(values)
          if(res){
             form.resetFields()
          }
@@ -68,7 +68,7 @@ export default function Register() {
                     >
                         <Input  placeholder="名前"/>
                     </Form.Item>
-                    <Form.Item >
+                    {/* <Form.Item >
                         <input type='file' onChange={handleFileChange} id='file' style={{ display: 'none' }} />
                         <div style={{ position: 'relative', display: 'inline-block' }}>
                             {previewUrl && <img size={148} src={previewUrl} className='preview-avt'></img>}
@@ -79,7 +79,7 @@ export default function Register() {
                                 </div>
                             </label>
                         </div>
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item>
                         <Button type='primary' htmlType='submit' block>

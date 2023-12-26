@@ -11,7 +11,8 @@ class AuthService {
             return null;
         }
     };
-    register = async (user) => {
+
+    signup = async (user) => {
         try {
             const url= `${BaseUrl}/signup`
             return await Http.post(url, user);

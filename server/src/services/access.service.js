@@ -14,9 +14,8 @@ class AccessService {
             email: email,
         });
         if (!foundUser) throw new BadRequestError(`User not registered!`);
-        console.log(`founded`, foundUser,password);
+        console.log(`founded`, foundUser);
         const match = await bcrypt.compare(password, foundUser.password);
-        console.log(`founded`, foundUser,password);
         if (!match) throw new AuthFailureError('Authentication error');
 
         const access_token = jwt.sign( getInfoData({ fields: ['_id', 'display_name', 'email', 'photo_url','fridge'], object: foundUser }), process.env.KEY);

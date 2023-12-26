@@ -57,14 +57,14 @@ export default function Home() {
                         <div className='ingredient'>
                             <div className='ingredient-info'>
                                 <p>{ingredientInfo.ingredient_name}</p>
-                                <p>Exp :{convertToDate(item.import_exp)} </p>
+                                <p>消費期限 :{convertToDate(item.import_exp)} </p>
                                 <p>
-                                    amount:{item.original_amount} {ingredientInfo.ingredient_unit}
+                                量:{item.original_amount} {ingredientInfo.ingredient_unit}
                                 </p>
                                 <p>
-                                   remain: {item.remain_amount} {ingredientInfo.ingredient_unit}
+                                   残り: {item.remain_amount} {ingredientInfo.ingredient_unit}
                                 </p>
-                                <p>{isExpired(item.import_exp)? <Tag color='red'>Expired</Tag>:<Tag color='gold'>Comming soon expired</Tag>}</p>
+                                <p>{isExpired(item.import_exp)? <Tag color='red'>期限切れ</Tag>:<Tag color='gold'>もうすぐ期限切れ</Tag>}</p>
                             </div>
                             <img
                                 className='ingredient-img'
@@ -84,8 +84,8 @@ export default function Home() {
                         }}>
                             <div className='ingredient-info'>
                                 <p>{item.recipe_name}</p>
-                                <p>Description: {item.recipe_description} </p>
-                                <p>Time cook: {item.time_cook} </p>
+                                <p>デスクリプション: {item.recipe_description} </p>
+                                <p>調理時間: {item.time_cook} </p>
                             </div>
                             <img
                                 className='ingredient-img'
@@ -102,9 +102,9 @@ export default function Home() {
 
                                         <div className='recipe-info' >
                                             <h3>{selectedRecipe?.recipe_name}</h3>
-                                            <p>Time cook: {selectedRecipe?.time_cook}</p>
+                                            <p>調理時間: {selectedRecipe?.time_cook}</p>
                                             <p>
-                                                Ingredients:
+                                            材料:
                                                 <div className='grid-2 mt-16'>
                                                     {selectedRecipe?.recipe_ingredients?.map((ingre) => {
                                                         const ingredient = ingre.ingredient;
@@ -112,7 +112,7 @@ export default function Home() {
                                                     })}
                                                 </div>
                                             </p>
-                                            <p>Description: {selectedRecipe?.recipe_description}</p>
+                                            <p>デスクリプション: <br/> {selectedRecipe?.recipe_description}</p>
                                         </div>
                                     </div>
     

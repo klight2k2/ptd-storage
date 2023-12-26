@@ -4,7 +4,7 @@ import { Image, Menu, Button, theme } from 'antd';
 import { GrStorage } from 'react-icons/gr';
 import { TiBook } from 'react-icons/ti';
 import { NavLink } from 'react-router-dom';
-
+import { MdManageAccounts } from "react-icons/md";
 export default function Sidebar() {
     return (
         <div>
@@ -29,6 +29,7 @@ export default function Sidebar() {
                         icon: <TiBook fontSize={24} />,
                         label: <NavLink to='recipe'>レシピ</NavLink>,
                     },
+                  
                     {
                         key: '4',
                         icon: <GrStorage />,
@@ -48,6 +49,11 @@ export default function Sidebar() {
                             },
                            
                         ],
+                    },
+                    {
+                        key: '5',
+                        icon: <MdManageAccounts  fontSize={24} />,
+                        label: <NavLink to='account-manage'>アカウント管理</NavLink>,
                     },
                 ]}
             />

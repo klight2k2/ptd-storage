@@ -11,7 +11,7 @@ class IngredientController {
     createImportIngredient = async (req, res, next) => {
       console.log('create import',req.fridge)
         return new SuccessResponse({
-            message: 'import ingredient successfully',
+            message: '食材のインポートが成功しました',
             metadata: await ImportService.createImportIngredient({
                 ...req.body,fridge: req.fridge
             }),
@@ -20,14 +20,14 @@ class IngredientController {
     getExpiredImportIngredient = async (req, res, next) => {
         console.log('get expiring import',req.query)
         return new SuccessResponse({
-            message: 'Successfully create ingredient',
+            // message: 'Successfully create ingredient',
             metadata: await ImportService.getExpiredImportIngredient({ fridge_id: req.fridge, date_exp: req.query?.dateExp }),
         }).send(res);
     };
     getExpiredSoonImportIngredient = async (req, res, next) => {
         console.log('get expiring soon import',req.query.toDate)
         return new SuccessResponse({
-            message: 'Successfully create ingredient',
+            // message: 'Successfully create ingredient',
             metadata: await ImportService.getExpiredSoonImportIngredient({
                 fridge_id: req.fridge,
                 from_date: req.query?.fromDate,
@@ -38,7 +38,7 @@ class IngredientController {
 
     throwImportIngredient = async (req, res, next) => {
         return new SuccessResponse({
-            message: 'Successfully delete ingredient',
+            message: '食材を捨てました',
             metadata: await ImportService.throwImportIngredient({
                 import_id: req.params.id,
             }),
@@ -47,7 +47,7 @@ class IngredientController {
 
     takeImportIngredient = async (req, res, next) => {
         return new SuccessResponse({
-            message: 'Successfully delete ingredient',
+            message: '食材を取得しました',
             metadata: await ImportService.takenImportIngredientById({
                 ...req.body,
             }),
@@ -64,7 +64,7 @@ class IngredientController {
     };
     deleteIngredient = async (req, res, next) => {
         return new SuccessResponse({
-            message: 'Successfully delete ingredient',
+            message: '削除が成功しました',
             metadata: await ImportService.deleteImportIngredient({
                 import_id: req.params.id,
             }),

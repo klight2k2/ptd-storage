@@ -16,6 +16,12 @@ class AccessController{
             metadata:await AccessService.login(req.body)
         }).send(res)
     }
+    getAllUser= async (req,res,next)=>{
+        new SuccessResponse({
+            
+            metadata:await AccessService.getAllUser()
+        }).send(res)
+    }
   
 }
 

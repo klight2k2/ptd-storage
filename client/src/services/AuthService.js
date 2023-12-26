@@ -20,6 +20,15 @@ class AuthService {
             return null;
         }
     };
+    getAllUser = async () => {
+        try {
+            const url= `${BaseUrl}/users`
+            return await Http.get(url);
+        } catch (e) {
+            console.log('get all user error', e);
+            return null;
+        }
+    };
 }
 
 

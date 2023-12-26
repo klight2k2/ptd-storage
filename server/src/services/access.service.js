@@ -5,13 +5,18 @@ const { BadRequestError, AuthFailureError, ForbiddenError } = require('../core/e
 const jwt = require("jsonwebtoken");
 const fridgeModel = require('../models/fridge.model');
 class AccessService {
+    static getAllUser= async ()=>{
+        const listUser= userModel.find().lean();
+        return listUser
+    }
     static login = async ({ email, password }) => {
         const foundUser = await userModel.findOne({
             email: email,
         });
         if (!foundUser) throw new BadRequestError(`User not registered!`);
-        console.log(`founded`, foundUser);
-        const match = bcrypt.compare(password, foundUser.password);
+        console.log(`founded`, foundUser,password);
+        const match = await bcrypt.compare(password, foundUser.password);
+        console.log(`founded`, foundUser,password);
         if (!match) throw new AuthFailureError('Authentication error');
 
         const access_token = jwt.sign( getInfoData({ fields: ['_id', 'display_name', 'email', 'photo_url','fridge'], object: foundUser }), process.env.KEY);

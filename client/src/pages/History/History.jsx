@@ -6,15 +6,15 @@ import {Divider, Tag} from "antd"
 import "./history.scss"
 const actions={
     "THROW":{
-        value:"Throw",
+        value:"捨てる",
         color:'red'
     },
     "IMPORT":{
-        value:"Import",
+        value:"インポート",
         color:'green'
     },
     "EXPORT":{
-        value:"Take",
+        value:"取る",
         color:'purple'
     },
     
@@ -32,7 +32,7 @@ export default function History() {
 
 
   return (
-    <div className='history-container'><h3>Lịch sử</h3>
+    <div className='history-container'><h3>ログ</h3>
     
     {logs.map(log=>{
         const ingredient=log?.log_import?.ingredient
@@ -41,10 +41,10 @@ export default function History() {
             <img className='history-img' src={formatImageLink(log.log_import.ingredient.image_url)} alt="" />
        
         <div className="history-info">
-            <p className='history-action'>Ingredient: { ingredient.ingredient_name}</p>
-            <p>Amount:  {log.log_amount}</p>
-            <p >Status: <Tag color={actions[log.log_type].color}> {actions[log.log_type].value} </Tag> </p>
-            <p>Created at: {convertToDateISO(log.createdAt)}</p>
+            <p className='history-action'>材料: { ingredient.ingredient_name}</p>
+            <p>量:  {log.log_amount}</p>
+            <p >アクション: <Tag color={actions[log.log_type].color}> {actions[log.log_type].value} </Tag> </p>
+            <p>作成日: {convertToDateISO(log.createdAt)}</p>
         </div>
         </div>
         <Divider/>

@@ -18,7 +18,7 @@ export default function Navbar() {
         {
             label: (
                 <NavLink to='/' onClick={() => logout()}>
-                    Logout
+                    ログアウト
                 </NavLink>
             ),
             key: '2',

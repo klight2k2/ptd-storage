@@ -7,6 +7,7 @@ const { authentication } = require('../../auth/authUtils')
 
 router.post('/auth/signup',asyncHandler(accessController.signUp) )
 router.post('/auth/login',asyncHandler(accessController.login) )
+router.get('/auth/users',authentication,asyncHandler(accessController.getAllUser) )
 router.post('/auth/test',authentication,(req,res,next)=>{
     res.json({success:true})
 } )

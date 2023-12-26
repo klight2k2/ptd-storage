@@ -124,10 +124,10 @@ export default function Recipe() {
             <div className='recipe-container'>
                 <h3>レシピのリスト </h3>
                 <div className='recipe-action'>
-                    <Search className='recipe-search' placeholder='Enter recipe name...' onSearch={onSearch} />
+                    <Search className='recipe-search' placeholder='検索するレシピ名を入力してください' onSearch={onSearch} />
                     <Button onClick={handleOpen} icon={<FileAddOutlined />}>
                         {' '}
-                       Add recipe
+                       レシピを追加
                     </Button>
                 </div>
                 <div className='recipes-list'>
@@ -140,9 +140,9 @@ export default function Recipe() {
 
                                         <div className='recipe-info'>
                                             <h3>{item.recipe_name}</h3>
-                                            <p>Time cook: {item.time_cook}</p>
+                                            <p>調理時間: {item.time_cook}</p>
                                             <p>
-                                                Ingredients:
+                                                材料:
                                                 <div className='grid-2 mt-16'>
                                                     {item.recipe_ingredients?.map((ingre) => {
                                                         const ingredient = ingre.ingredient;
@@ -150,19 +150,19 @@ export default function Recipe() {
                                                     })}
                                                 </div>
                                             </p>
-                                            <p>Description: {item.recipe_description}</p>
+                                            <p>デスクリプション: {item.recipe_description}</p>
                                         </div>
                                     </div>
                                     <div style={{display:'flex'}}>
                                         <Popconfirm
-                                            title='Delete the recipe'
-                                            description='Are you sure to delete this recipe?'
+                                            title='レシピを削除する'
+                                            description='このレシピを削除してもよろしいですか。'
                                             onConfirm={() => handleDeleteRecipe(item._id)}
-                                            okText='Yes'
-                                            cancelText='No'
+                                            okText='はい'
+                                            cancelText='いええ'
                                             className='mr-8'
                                         >
-                                            <Button>Delete</Button>
+                                            <Button>削除</Button>
                                             {/* <DeleteOutlined style={{ fontSize: 24 }} /> */}
                                         </Popconfirm>
                                         <Button
@@ -171,7 +171,7 @@ export default function Recipe() {
                                                 handleOpenEdit(item);
                                             }}
                                         >
-                                            Edit
+                                            編集
                                         </Button>
                                     </div>
                                 </div>
@@ -182,7 +182,7 @@ export default function Recipe() {
                 </div>
             </div>
 
-            <Modal title={selectedRecipe ? 'Sửa công thức' : 'Thêm công thức'} open={open} onOk={handleSubmit} onCancel={() => setOpen(false)}>
+            <Modal title={selectedRecipe ? 'レシピを編集' : 'レシピを追加'} open={open} onOk={handleSubmit} onCancel={() => setOpen(false)}>
                 <Form
                     name='basic'
                     form={form}
@@ -205,7 +205,7 @@ export default function Recipe() {
                     autoComplete='off'
                 >
                     <Form.Item
-                        label='Recipe name'
+                        label='レシピの名前'
                         name='recipe_name'
                         rules={[
                             {
@@ -217,7 +217,7 @@ export default function Recipe() {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label='Recipe description'
+                        label='デスクリプション'
                         name='recipe_description'
                         rules={[
                             {
@@ -229,29 +229,29 @@ export default function Recipe() {
                         <Input.TextArea showCount maxLength={1000} />
                     </Form.Item>
                     <Form.Item
-                        label='Time cook'
+                        label='調理時間'
                         name='time_cook'
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your time cook!',
+                                message: 'Please input your 調理時間!',
                             },
                         ]}
                     >
                         <Input />
                     </Form.Item>
-                    <Form.Item label='Image'>
+                    <Form.Item label='イメージ'>
                         <input type='file' onChange={handleFileChange} id='file' style={{ display: 'none' }} />
                         <div style={{ position: 'relative', display: 'inline-block' }}>
                             {previewUrl && <img size={148} src={previewUrl} className='preview-avt'></img>}
                             <label htmlFor='file' className='upload-icon'>
                                 <div className='upload-btn'>
-                                    <UploadOutlined style={{ fontSize: '20px', cursor: 'pointer' }} /> Upload
+                                    <UploadOutlined style={{ fontSize: '20px', cursor: 'pointer' }} /> アップロード
                                 </div>
                             </label>
                         </div>
                     </Form.Item>
-                    <Form.Item name={'recipe_ingredients'} label='ingredients'>
+                    <Form.Item name={'recipe_ingredients'} label='材料'>
                         <Form.List name={['recipe_ingredients']}>
                             {(subFields, subOpt) => (
                                 <div
@@ -289,7 +289,7 @@ export default function Recipe() {
                                         </Space>
                                     ))}
                                     <Button type='dashed' onClick={() => subOpt.add()} block>
-                                        + Add Sub Item
+                                        + サブ食材を追加する  
                                     </Button>
                                 </div>
                             )}

@@ -11,20 +11,20 @@ class RecipeController {
         console.log("hello",req.body)
         const image_url=req?.file?.filename ||req.body?.image_url
         return new SuccessResponse({
-            message: 'Successfully create recipe',
+            message: 'レシピの作成が成功しました',
             metadata: await RecipeService.createRecipe({ user_id: req.user._id, recipe: { ...req.body,image_url } }),
         }).send(res);
     };
     updateRecipe = async (req, res, next) => {
         const image_url=req?.file?.filename ||req.body?.image_url
         return new SuccessResponse({
-            message: 'Successfully update recipe',
+            message: 'レシピの更新が成功しました',
             metadata: await RecipeService.updateRecipe({ recipe_id: req.params.id, recipe: { ...req.body,image_url } }),
         }).send(res);
     };
     deleteRecipe = async (req, res, next) => {
         return new SuccessResponse({
-            message: 'Successfully delete recipe',
+            message: 'レシピの削除が成功しました',
             metadata: await RecipeService.deleteRecipe({ recipe_id: req.params.id }),
         }).send(res);
     };

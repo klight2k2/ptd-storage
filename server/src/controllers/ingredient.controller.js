@@ -10,7 +10,7 @@ class IngredientController {
 
     createIngredient = async (req, res, next) => {
         return new SuccessResponse({
-            message: 'create category successfully',
+            message: 'カテゴリーの作成が成功しました',
             metadata: await IngredientService.createIngredient({ ...req.body,image_url:req?.file?.filename }),
         }).send(res);
     };

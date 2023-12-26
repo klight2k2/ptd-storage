@@ -49,58 +49,44 @@ export default function Register() {
                 >
                     <Form.Item
                         name='email'
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your email!',
-                            },
-                        ]}
+                        rules={[{ required: true, message: 'このフィールドは必須です。' }]}
                     >
-                        <Input placeholder='Email' />
+                        <Input placeholder='メール' />
                     </Form.Item>
 
                     <Form.Item
                         name='password'
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your password!',
-                            },
-                        ]}
+                        rules={[{ required: true, message: 'このフィールドは必須です。' }]}
                     >
-                        <Input.Password  placeholder='Password'/>
+                        <Input.Password  placeholder='パスワード' />
                     </Form.Item>
 
                     <Form.Item
                         name='display_name'
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your display name!',
-                            },
-                        ]}
+                        rules={[{ required: true, message: 'このフィールドは必須です。' }]}
                        
                     >
-                        <Input  placeholder="Display Name"/>
+                        <Input  placeholder="名前"/>
                     </Form.Item>
-                    {/* <Form.Item label='Image'>
+                    <Form.Item >
                         <input type='file' onChange={handleFileChange} id='file' style={{ display: 'none' }} />
                         <div style={{ position: 'relative', display: 'inline-block' }}>
                             {previewUrl && <img size={148} src={previewUrl} className='preview-avt'></img>}
+                            {previewUrl && <br></br>}
                             <label htmlFor='file' className='upload-icon'>
                                 <div className='upload-btn'>
-                                    <UploadOutlined style={{ fontSize: '20px', cursor: 'pointer' }} /> Upload
+                                    <UploadOutlined style={{ fontSize: '20px', cursor: 'pointer' }} /> アバターをアップロード
                                 </div>
                             </label>
                         </div>
-                    </Form.Item> */}
+                    </Form.Item>
 
                     <Form.Item>
                         <Button type='primary' htmlType='submit' block>
-                            Register
+                            登録
                         </Button>
 
-                        Or <NavLink to="/login">Login now!</NavLink>
+                         <NavLink to="/login">ログイン!</NavLink>
                     </Form.Item>
                 </Form>
             </div>

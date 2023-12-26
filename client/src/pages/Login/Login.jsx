@@ -47,33 +47,23 @@ export default function Login() {
                 >
                     <Form.Item
                         name='email'
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your email!',
-                            },
-                        ]}
+                        rules={[{ required: true, message: 'このフィールドは必須です。' }]}
                     >
-                        <Input placeholder='Email' />
+                        <Input placeholder='メール' />
                     </Form.Item>
 
                     <Form.Item
                         name='password'
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your password!',
-                            },
-                        ]}
+                        rules={[{ required: true, message: 'このフィールドは必須です。' }]}
                     >
-                        <Input.Password placeholder='Password' />
+                        <Input.Password placeholder='パスワード' />
                     </Form.Item>
 
                     <Form.Item>
                         <Button type='primary' htmlType='submit' block>
-                            Submit
+                            ログイン
                         </Button>
-                        Or <NavLink to='/register'>Register now!</NavLink>
+                         <NavLink to='/register'>登録する？</NavLink>
                     </Form.Item>
                 </Form>
             </div>

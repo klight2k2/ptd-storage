@@ -81,10 +81,10 @@ export default function Category() {
             <h3>カテゴリー</h3>
 
             <div className='import-action'>
-                <Search className='import-search' placeholder='input search text' onSearch={onSearch} />
+                <Search className='import-search' placeholder='検索するカテゴリーを入力してください' onSearch={onSearch} />
                 <Button onClick={handleOpen} icon={<PlusOutlined />}>
                     {' '}
-                    Add category
+                材料を追加
                 </Button>
             </div>
             <div className='category-list'>
@@ -95,20 +95,20 @@ export default function Category() {
                             <div className='category'>
                                 <img src={formatImageLink(item.image_url)} className='category-img'></img>
                                 <div className='category-info'>
-                                    <h3>Category: {item.ingredient_name}</h3>
-                                    <p>Unit: {item.ingredient_unit}</p>
+                                    <h3>食材の名前: {item.ingredient_name}</h3>
+                                    <p>単位: {item.ingredient_unit}</p>
                                 </div>
                             </div>
                             <div>
                                 <Popconfirm
-                                    title='Delete the recipe'
-                                    description='Are you sure to delete this recipe?'
+                                    title='カテゴリーを削除する'
+                                    description='このカテゴリーを削除してもよろしいですか。'
                                     onConfirm={() => handleDeleteCategory(item._id)}
                                     okText='Yes'
                                     cancelText='No'
                                     className='mr-8'
                                 >
-                                    <Button>Delete</Button>
+                                    <Button>削除</Button>
                                     {/* <DeleteOutlined style={{ fontSize: 24 }} /> */}
                                 </Popconfirm>
                                 {/* <Button
@@ -126,7 +126,7 @@ export default function Category() {
                     );
                 })}
             </div>
-            <Modal title='Thêm công thức' open={open} onOk={handleSubmit} onCancel={() => setOpen(false)}>
+            <Modal title='材料を追加' open={open} onOk={handleSubmit} onCancel={() => setOpen(false)}>
                 <Form
                     name='basic'
                     form={form}
@@ -145,35 +145,35 @@ export default function Category() {
                     autoComplete='off'
                 >
                     <Form.Item
-                        label='Category name'
+                        label='食材の名前'
                         name='ingredient_name'
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your category name!',
+                                message: 'このフィールドは必須です!',
                             },
                         ]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label='Unit'
+                        label='単位'
                         name='ingredient_unit'
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your category unit!',
+                                message: 'このフィールドは必須です!',
                             },
                         ]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label='Image'
+                        label='イメージ'
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your image!',
+                                message: 'このフィールドは必須です!',
                             },
                         ]}
                     >
@@ -182,7 +182,7 @@ export default function Category() {
                             {previewUrl && <img size={148} src={previewUrl} className='preview-avt'></img>}
                             <label htmlFor='file' className='upload-icon'>
                                 <div className='upload-btn'>
-                                    <UploadOutlined style={{ fontSize: '20px', cursor: 'pointer' }} /> Upload
+                                    <UploadOutlined style={{ fontSize: '20px', cursor: 'pointer' }} /> アップロード
                                 </div>
                             </label>
                         </div>
